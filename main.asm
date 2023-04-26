@@ -24,14 +24,9 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 ; Main loop here
 ;----------------------------------------------------------------------------
 
-; Visto 1 - conversão
+NUM    		 .equ    3444        ;Indicar nÃºmero a ser convertido
 
-; Alunos: Caio Rodrigues Lino Mesquita - 202014842
-;		  Juan Carlos Cordir Da Silva - 170147185
-
-NUM    		 .equ    3444        ;Indicar número a ser convertido
-
-		        mov     #NUM, R5    ;R5 = número a ser convertido
+		        mov     #NUM, R5    ;R5 = nÃºmero a ser convertido
 		        mov     #RESP, R6   ;R6 = ponteiro para escrever a resposta
 				mov     #ALGARISMOS_ROMANOS, R7
 		        cmp		#1, R5
@@ -40,13 +35,13 @@ NUM    		 .equ    3444        ;Indicar número a ser convertido
 		        jeq		ALG_ROM
 		        jhs	    FIM
 
-ALG_ROM:                               ;subrotina alg_rom para adicionar 1000 ao r8 e começar as validações da unidade de milhar
+ALG_ROM:                               ;subrotina alg_rom para adicionar 1000 ao r8 e comeÃ§ar as validaÃ§Ãµes da unidade de milhar
 				push R8
 				mov  #1000, R8
 				cmp  R8, R5
 				jl	 CENTENA_LOOP
 
-MILHAR_LOOP:                               ;validações da unidade de milhar
+MILHAR_LOOP:                               ;validaÃ§Ãµes da unidade de milhar
 
 				sub  R8, R5
 				mov.b  6(R7), 0(R6)
@@ -54,7 +49,7 @@ MILHAR_LOOP:                               ;validações da unidade de milhar
 				cmp  R8, R5
 				jhs  MILHAR_LOOP
 
-CENTENA_LOOP:                            ;subrotina centena_loop para adicionar 900/500/400 ao r8 e começar as validações da centena
+CENTENA_LOOP:                            ;subrotina centena_loop para adicionar 900/500/400 ao r8 e comeÃ§ar as validaÃ§Ãµes da centena
 
 				cmp #100, R5
 				jl	DEZENA_LOOP
@@ -107,7 +102,7 @@ CENTENA_300:
 				jhs    CENTENA_300
 				NOP
 
-DEZENA_LOOP:                              ;subrotina dezena_loop para adicionar 90/50/40 ao r8 e começar as validações da dezena
+DEZENA_LOOP:                              ;subrotina dezena_loop para adicionar 90/50/40 ao r8 e comeÃ§ar as validaÃ§Ãµes da dezena
 				cmp #10, R5
 				jl	UNIDADE_LOOP
 			    mov #90, R8
@@ -159,7 +154,7 @@ DEZENA_30:
 				NOP
 
 
-UNIDADE_LOOP:                               ;subrotina unidade_loop para adicionar 9/5/4 ao r8 e começar as validações da unidade
+UNIDADE_LOOP:                               ;subrotina unidade_loop para adicionar 9/5/4 ao r8 e comeÃ§ar as validaÃ§Ãµes da unidade
 				cmp #1, R5
 				jlo	FIM
 			    mov #9, R8
